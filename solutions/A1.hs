@@ -17,7 +17,7 @@ _DISPLAY_LOGO_ = True
 -- Q#03
 
 convertRowIndex :: Char -> Int
-convertRowIndex i = (fromEnum (toUpper i)) - 65
+convertRowIndex c = (fromEnum (toUpper c)) - 65
 
 -- Q#04
 
@@ -32,36 +32,63 @@ _SEP_ = "_|_"
 -- *** Assignment 1-2 *** --
 
 -- Q#06
-data Square
 
+data Square = X | O | Empty deriving (Show, Eq)
+X = X
+O = O
+Empty = Empty
 
 -- Q#07
-data GameState
+
+data GameState = Xwon | Owon | TieGame | GameInProgress deriving (Show, Eq)
+Xwon = Xwon
+Owon = Owon
+TieGame = TieGame
+GameInProgress = GameInProgress
 
 
 -- Q#08
 
+type Player = Square
 
+type Row = [Square]
 
+type Line = [Square]
 
+type Board = [Row]
 
+type Move = (Int, Int)
 
 -- Q#09
 
-getFirstPlayer = undefined
+getFirstPlayer :: Bool -> Player
+getFirstPlayer flip = if flip then X
+                        else O
 
+getFirstPlayer_ :: Bool -> Player                        
+getFirstPlayer_ flip
+  | flip = X
+  | otherwise = O
 
-getFirstPlayer_ = undefined
 
 -- Q#10
 
-showGameState gs = undefined
+showGameState :: GameState -> String
+showGameState gs = case gs of
+  Xwon    -> "X won"
+  Owon    -> "O won"
+  TieGame -> "Tie Game"
+  _       -> "Game In Progress"
 
 -- Q#11
 
-switchPlayer = undefined
-
+switchPlayer :: Player -> Player
+switchPlayer X = O
+switchPlayer O = X
+switchPlayer Empty = Empty
 
 -- Q#12
-
-showSquare = undefined
+showSquare ::  Square -> String
+showSquare X = "X"
+showSquare O = "O"
+showSquare Empty = "_"
