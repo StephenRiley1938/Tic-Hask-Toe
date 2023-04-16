@@ -31,15 +31,17 @@ readDigit c
 
 -- Q#04
 
-_EMPTY_ROW_ = replicate _SIZE_ Empty
+_EMPTY_ROW_ :: Row
+_EMPTY_ROW_ = replicate _SIZE_ E
 
+_EMPTY_BOARD_ :: Board
 _EMPTY_BOARD_ = replicate _SIZE_ _EMPTY_ROW_
 
 -- Q#05
 
 isTied :: Board -> Bool
 isTied board
-  | elem Empty (concat board) = False
+  | elem E (concat board) = False
   | otherwise = True
 
 _TIED_BOARD_ :: Board
@@ -57,7 +59,7 @@ indexRowStrings strings = zip ['A' ..] strings
 -- Q#07
 
 formatLine :: [String] -> String
-formatLine line = intercalate _SEP_ line
+formatLine line = _SEP_ ++ intercalate _SEP_ line ++ _SEP_
 
 -- *** Assignment 2-2 *** --
 
@@ -108,3 +110,18 @@ replaceSquareInRow play col row =
 rsX = replaceSquareInRow X
 
 rsO = replaceSquareInRow O
+ 
+    
+
+    
+   
+
+
+
+
+
+
+
+
+
+
