@@ -15,7 +15,7 @@ showInts [] = []
 showInts [a] = [(show a)]
 --showInts (a:as) = [(show a)] ++ showInts as
 showInts (a:as) = showInts [a] ++ showInts as
-  
+
 _HEADER_ :: String
 _HEADER_ = " " ++ formatLine (showInts _RANGE_)
 
@@ -43,12 +43,14 @@ isColEmpty (r:rs) c = (r == E && c == 0) || isColEmpty rs (c - 1)
 isColEmpty [] _ = False
 
 -- Q#05
- 
+
 dropFirstSquare :: [Square] -> [Square]
 dropFirstSquare (s:ss) = ss
+dropFirstSquare [] = []
 
 dropLastSquare :: [Square] -> [Square]
 dropLastSquare (s:ss) = init (s:ss)
+dropLastSquare [] = []
 
 dropFirstCol :: [Row] -> [Row]
 dropFirstCol (r:rs) = (tail r) : dropFirstCol rs
@@ -79,7 +81,7 @@ getAllLines board = concat [board, transpose board, [getDiag1 board, getDiag2 bo
 putSquare :: Player -> Board -> Move -> Board
 putSquare _ [] _ = []
 putSquare player (r:rs) (ri, ci)
-  | ri == 0 = (replaceSquareInRow player ci r) : rs
+  | ri == 0 = replaceSquareInRow player ci r : rs
   | otherwise = r : putSquare player rs (ri - 1, ci)
 
 --replaceSquareInRow :: Player -> Int -> Row -> Row
@@ -103,12 +105,12 @@ isWinningLine player line = go False player line
     go :: Bool -> Player -> Line -> Bool
     go bool _ [] = bool
     go _ player (p:ps) = p == player && go True player ps
-    
+
 -- Q#10
 
 isValidMove :: Board -> Move -> Bool
 isValidMove board move
-  | null board = False
+--  | null board = False
   | not (isMoveInBounds move) = False
   | otherwise = go board move
   where
@@ -116,7 +118,8 @@ isValidMove board move
     go (row:rows) (ri, ci)
       | ri == 0   = isColEmpty row ci
       | otherwise = go rows (ri - 1, ci)
-  
+    go [] _ = False
+
 
 --isColEmpty :: Row -> Int -> Bool
 
